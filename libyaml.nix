@@ -34,11 +34,6 @@ stdenv.mkDerivation rec {
     scheme-bytestructures
   ];
   outputs = [ "out" ];
-  #[
-  #  guile
-  #  guile-nyacc
-  #  scheme-bytestructures
-  #];
 
   sourceRoot = ".";
 
