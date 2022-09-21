@@ -26,7 +26,7 @@
               stdenv = nixpkgs.stdenv;
               guile = nixpkgs.pkgs.guile_3_0;
               scheme-bytestructures = nixpkgs.scheme-bytestructures;
-              writeText = nixpkgs.writeText;
+              #writeText = nixpkgs.writeText;
               #makeWrapper =makeWrapper;
             };
             guile-libyaml = nixpkgs.callPackage ./libyaml.nix {

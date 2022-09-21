@@ -1,8 +1,8 @@
 { lib
 , stdenv
 , guile
-, #makeWrapper,
-  writeText
+  #, makeWrapper
+  #, writeText
 , scheme-bytestructures
 ,
 }:
