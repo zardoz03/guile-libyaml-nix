@@ -38,24 +38,33 @@ stdenv.mkDerivation rec {
   sourceRoot = ".";
 
   postUnpack = ''
-    rm ./guix.scm \
-       ./demo1.yml \
-       ./demo1.scm \
-       ./yaml/libyaml.scm \
-       ./yaml/ffi-help-rt.scm
-    cp "${guile-nyacc}"/share/guile/site/3.0/system/ffi-help-rt.scm \
+    #ls --color=auto source
+    cd source
+    rm guix.scm \
+       demo1.yml \
+       demo1.scm
+       #yaml/libyaml.scm \
+       #yaml/ffi-help-rt.scm
+    cp "${guile-nyacc}"/share/guile/site/system/ffi-help-rt.scm \
        yaml/ffi-help-rt.scm
-    sed -i 's#system ffi-help-rt#yaml ffi-help-rt#' yaml/ffi-help-rt.scm
+    sed -i 's#system ffi-help-rt#yaml ffi-help-rt#' \
+       yaml/ffi-help-rt.scm
   '';
 
   ##equiv to add-before buildPhase
   preBuild = ''
     guild compile-ffi --no-exec yaml/libyaml.ffi
 
+    #ls --color=auto
+    #ls --color=auto yaml
+
     sed -i 's#system ffi-help-rt#yaml ffi-help-rt#' \
-        -i 's#dynamic-link "libyaml"#dynamic-link "${libyaml}"/lib/libyaml"#'
+        yaml/libyaml.scm
+    sed -i 's#dynamic-link "libyaml"#dynamic-link "${libyaml}/lib/libyaml"#' \
         yaml/libyaml.scm
   '';
+
+  dontInstall = true;
 
   meta = with lib; {
     description = "Guile wrapper for libYAML";
