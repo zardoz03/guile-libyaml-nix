@@ -13,9 +13,9 @@ stdenv.mkDerivation rec {
 
   src = fetchFromGitHub {
     owner = "mwette";
-    repo = "guile-libyaml#main";
+    repo = "guile-libyaml";
     rev = "2bdacb72a65ab63264b2edc9dac9692df7ec9b3e";
-    sha256 = "0000000000000000000000000000000000000000000000000000";
+    sha256 = "8SCthUVwSKlsCcyTpruXHD6R+xgLxZ0FpXKHmINfWq8=";
   };
 
   nativeBuildInputs = [
@@ -33,17 +33,21 @@ stdenv.mkDerivation rec {
     guile-nyacc
     scheme-bytestructures
   ];
-  outputs = ["out"];
+  outputs = [ "out" ];
   #[
   #  guile
   #  guile-nyacc
   #  scheme-bytestructures
   #];
 
+  sourceRoot = ".";
+
   unpackPhase = ''
-    rm guix.scm demo1.yml demo1.scm \
-       yaml/libyaml.scm \
-       yaml/ffi-help-rt.scm
+    rm ./guix.scm \
+       ./demo1.yml \
+       ./demo1.scm \
+       ./yaml/libyaml.scm \
+       ./yaml/ffi-help-rt.scm
     cp "${guile-nyacc}"/share/guile/site/3.0/system/ffi-help-rt.scm \
        yaml/ffi-help-rt.scm
     sed -i 's#system ffi-help-rt#yaml ffi-help-rt#' yaml/ffi-help-rt.scm
@@ -64,7 +68,7 @@ stdenv.mkDerivation rec {
     license = licenses.lgpl3Plus;
     broken = !(versionOlder "2.0.13" guile.version);
     #taken from ./nyacc.nix
-    maintainers = with maintainers; [  ];
+    maintainers = with maintainers; [ ];
     platforms = platforms.unix;
   };
 }
