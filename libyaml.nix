@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
 
   sourceRoot = ".";
 
-  unpackPhase = ''
+  postUnpack = ''
     rm ./guix.scm \
        ./demo1.yml \
        ./demo1.scm \
@@ -49,8 +49,9 @@ stdenv.mkDerivation rec {
   '';
 
   ##equiv to add-before buildPhase
-  postConfigure = ''
+  preBuild = ''
     guild compile-ffi --no-exec yaml/libyaml.ffi
+
     sed -i 's#system ffi-help-rt#yaml ffi-help-rt#' \
         -i 's#dynamic-link "libyaml"#dynamic-link "${libyaml}"/lib/libyaml"#'
         yaml/libyaml.scm
